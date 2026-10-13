@@ -1,0 +1,5 @@
+﻿# Optional Codex project config (trusted projects only).
+# Copy to config.toml and customize.
+# Docs: https://developers.openai.com/codex/config-reference
+
+# project_doc_max_bytes = 65536

@@ -1,0 +1,8 @@
+{
+  "id": "web",
+  "label": "Web",
+  "frameworks": ["playwright"],
+  "detect_globs": ["**/playwright.config.*", "**/package.json"],
+  "adapter": "playwright",
+  "default_run": "npx playwright test"
+}

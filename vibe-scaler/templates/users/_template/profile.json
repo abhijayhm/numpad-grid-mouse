@@ -1,0 +1,15 @@
+{
+  "display_name": "",
+  "profiled_at": null,
+  "mcq": {
+    "agent_experience": null,
+    "explanation_preference": null,
+    "vibe_scaler_familiarity": null
+  },
+  "labels": {
+    "experience_tier": null,
+    "explanation_style": null,
+    "familiarity": null
+  },
+  "notes_for_agents": ""
+}

@@ -86,6 +86,7 @@ internal sealed class ApplicationCoordinator : IDisposable
         _overlay = new GridOverlayWindow();
         _gridActive = true;
         _helpPanel = false;
+        _lastEnterUtc = DateTime.MinValue;
         RefreshOverlay();
         _overlay.Show();
         EnsureHook();
@@ -151,7 +152,7 @@ internal sealed class ApplicationCoordinator : IDisposable
         }
 
         var hud = _config.Hud.Enabled
-            ? $"Depth {_gridModel.Depth} · Cell {_lastNumpadKey} · Win+Shift+? help"
+            ? $"Depth {_gridModel.Depth} · 1–9 aim · Win+Enter click · Win+Alt right · Win+Shift+? help"
             : "";
         _overlay.ShowGrid(_gridModel.CurrentRegion, _gridModel, _config, hud);
     }
@@ -218,77 +219,98 @@ internal sealed class ApplicationCoordinator : IDisposable
             return true;
         }
 
-        if (!WinChord.IsWinShift())
+        if (WinChord.IsWinShift())
         {
-            if (TryMapNumpad(vk, out var key))
+            switch (vk)
             {
-                var region = _gridModel!.SelectRegion(key);
-                if (region is not null)
-                {
-                    _lastNumpadKey = key;
-                    MovePointerTo(region);
-                    RefreshOverlay();
-                }
+                case 0x26:
+                    MovePointerToCurrentCenter();
+                    _pointer.Scroll(0, _config.Behavior.ScrollAmount * _config.Behavior.ScrollScale);
+                    return true;
 
+                case 0x28:
+                    MovePointerToCurrentCenter();
+                    _pointer.Scroll(0, -_config.Behavior.ScrollAmount * _config.Behavior.ScrollScale);
+                    return true;
+
+                case WinChord.VkOemSemicolon:
+                    ToggleLeftDrag();
+                    return true;
+
+                case WinChord.VkOemQuote:
+                    ToggleRightDragPath();
+                    return true;
+            }
+
+            return false;
+        }
+
+        if (WinChord.IsWinOnly())
+        {
+            if (vk == WinChord.VkReturn)
+            {
+                CommitPointerClick(left: true);
                 return true;
             }
 
-            if (vk == 0x08)
+            if (WinChord.IsAltKey(vk))
             {
-                var region = _gridModel!.GoUp();
-                if (region is not null)
-                {
-                    MovePointerTo(region);
-                    RefreshOverlay();
-                }
-
+                CommitPointerClick(left: false);
                 return true;
             }
 
             return false;
         }
 
-        if (vk == WinChord.VkReturn)
+        if (WinChord.IsWinDown())
+            return false;
+
+        if (TryMapNumpad(vk, out var key))
         {
-            MovePointerToCurrentCenter();
+            var region = _gridModel!.SelectRegion(key);
+            if (region is not null)
+            {
+                _lastNumpadKey = key;
+                MovePointerTo(region);
+                RefreshOverlay();
+            }
+
+            return true;
+        }
+
+        if (vk == 0x08)
+        {
+            var region = _gridModel!.GoUp();
+            if (region is not null)
+            {
+                MovePointerTo(region);
+                RefreshOverlay();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void CommitPointerClick(bool left)
+    {
+        MovePointerToCurrentCenter();
+        if (left)
+        {
             var now = DateTime.UtcNow;
             if ((now - _lastEnterUtc).TotalMilliseconds <= _config.Behavior.DoubleEnterMs)
                 _pointer.DoubleClick();
             else
                 _pointer.LeftClick();
             _lastEnterUtc = now;
-            return true;
         }
-
-        if (WinChord.IsAltKey(vk))
+        else
         {
-            MovePointerToCurrentCenter();
             _pointer.RightClick();
-            return true;
         }
 
-        switch (vk)
-        {
-            case 0x26:
-                MovePointerToCurrentCenter();
-                _pointer.Scroll(0, _config.Behavior.ScrollAmount * _config.Behavior.ScrollScale);
-                return true;
-
-            case 0x28:
-                MovePointerToCurrentCenter();
-                _pointer.Scroll(0, -_config.Behavior.ScrollAmount * _config.Behavior.ScrollScale);
-                return true;
-
-            case WinChord.VkOemSemicolon:
-                ToggleLeftDrag();
-                return true;
-
-            case WinChord.VkOemQuote:
-                ToggleRightDragPath();
-                return true;
-        }
-
-        return false;
+        System.Windows.Application.Current.Dispatcher.Invoke(CloseAll);
     }
 
     private void ToggleLeftDrag()

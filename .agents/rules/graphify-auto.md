@@ -1,0 +1,97 @@
+﻿> Keep Graphify knowledge graph synchronized after repository edits
+
+# Graphify Auto-Sync
+
+After creating, modifying, deleting, moving, or renaming repository files, keep the local Graphify graph in sync.
+
+Pair with `graphify-rule.mdc` (setup + navigation). Install this `.cursor/` bundle into each target repo.
+
+## When to run
+
+Run from the **repository root** after substantive edits to:
+
+- Source code, packages, backend, frontend, mobile, automation, scripts, config, rules, or docs
+- New files or folders that should become discoverable by graph-backed navigation
+- File deletions, moves, or renames that may leave stale graph nodes
+
+## `.graphifyignore` (create + maintain)
+
+**Location:** repo root `.graphifyignore` (gitignore syntax). Each repo owns its file; extend the baseline for local asset/binary trees.
+
+| When | Action |
+|------|--------|
+| Missing before first full graph run | Create `.graphifyignore` from **Baseline** below + repo-specific patterns |
+| New asset-heavy folder (images, video, fonts, static dumps, `assets/`, vendored binaries) | Append an exclude in the same edit batch |
+| `.graphifyignore` edited | Full `graphify update . --force` once (background) |
+
+**Baseline** (always include; add repo paths under `# repo-specific`):
+
+```
+graphify-out/
+node_modules/
+.git/
+**/__pycache__/
+**/venv/
+dist/
+build/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+*.mp4
+*.woff
+*.woff2
+*.zip
+*.tar
+*.gz
+*.exe
+
+# repo-specific
+```
+
+Do not negate (`!`) patterns to pull binaries back under excluded asset trees.
+
+## Commands (incremental default, background, single slot)
+
+**Track touched paths** in the current change set (created, modified, deleted, moved — repo-relative).
+
+**Default — only files you touched:**
+
+```bash
+python .cursor/scripts/graphify-update-changed.py path/to/a.py path/to/b.ts
+```
+
+Windows: `.cursor/scripts/graphify-update-changed.ps1 path/to/a.py path/to/b.ts`
+
+Include deleted/moved **old and new** paths when known. Add `--force` when a touched file was deleted or a move may leave stale nodes.
+
+**Full repo — only when incremental is insufficient:**
+
+| Case | Command |
+|------|---------|
+| `graphify-out/graph.json` missing | `graphify update .` |
+| `.graphifyignore` changed | `graphify update . --force` |
+| Large refactor / unclear touch set | `graphify update .` or `--force` |
+| First graph on repo | `graphify update .` |
+
+**How to run (mandatory):**
+
+1. Prefer **incremental** sync on the touched-path list above.
+2. Launch in a **background** shell (`block_until_ms: 0`). Do **not** wait before other work or the final reply.
+3. **At most one** Graphify update at a time (session-wide). If a newer sync is needed, kill the old terminal/process, then start the new command.
+4. Do not block, poll, or AwaitShell unless the next step truly requires a fresh `graph.json`.
+
+## Guardrails
+
+- Run Graphify once per coherent batch, not after every single file write.
+- Do not rerun just because `graphify-out/**` changed.
+- Do not run for transient files, logs, caches, or dependency folders (belong in `.graphifyignore`).
+- If Graphify CLI is missing: `pip install graphifyy`, then retry in background.
+- If incremental sync fails, fall back to full `graphify update .` in the background.
+
+## Expected agent behavior
+
+Before final response, if repository files were edited and Graphify applies: collect touched paths → start **incremental** background sync (or full sync when required). Do not wait for completion. Create `.graphifyignore` from the baseline if missing.
+

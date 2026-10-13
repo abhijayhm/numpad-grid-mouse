@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{TITLE}} — ideator verification hub</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; line-height: 1.45; margin: 0; }
+    header { padding: 1rem 1.25rem; background: #1e293b; color: #f8fafc; }
+    header h1 { margin: 0; font-size: 1.2rem; }
+    header p { margin: 0.35rem 0 0; font-size: 0.9rem; opacity: 0.9; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1.25rem; background: #f1f5f9; border-bottom: 1px solid #cbd5e1; }
+    nav a { font-size: 0.88rem; color: #0369a1; text-decoration: none; padding: 0.25rem 0.5rem; border-radius: 4px; }
+    nav a:hover { background: #e0f2fe; }
+    .frame-wrap { height: calc(100vh - 7rem); }
+    iframe { width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>{{TITLE}} — ideator hub</h1>
+    <p>Program <strong>{{PROGRAM_ID}}</strong> · One iframe per chunk · Refine wireframes per chunk, then approve</p>
+  </header>
+  <nav>
+    {{CHUNK_NAV_LINKS}}
+  </nav>
+  <div class="frame-wrap">
+    <iframe id="chunk-frame" title="Chunk acceptance" src="{{DEFAULT_CHUNK_SRC}}"></iframe>
+  </div>
+  <script>
+    document.querySelectorAll('nav a[data-src]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('chunk-frame').src = a.getAttribute('data-src');
+      });
+    });
+  </script>
+</body>
+</html>

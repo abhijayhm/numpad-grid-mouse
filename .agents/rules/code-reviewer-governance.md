@@ -1,0 +1,35 @@
+﻿> Code review per plan chunk — git, index, reviews/chunk-*.md
+
+# Code reviewer governance
+
+## When
+
+- Status **`code_review_pending`** or **`/vs-code-reviewer-*`**
+- After **vs-auto-tests** policy pass (or parallel for goat read)
+
+## Outputs
+
+`PROGRAM_ROOT/reviews/chunk-<id>.md` — one per `plan/chunks/*.md`.
+
+## Index
+
+Use **index-extractor** skill if `docs/indexing/` missing or stale before deep review.
+
+## Status transitions
+
+| From | To |
+|------|-----|
+| `code_review_pending` | `code_review_iteration` (agent writing reviews) |
+| Reviews complete + goat OK | `goat_verification_pending` or `human_checklist_pending` |
+| `archived` | Move folder → `docs/idea-to-reality-playground/archives/NN_short/` |
+
+**archived** — physically move program folder; update index links.
+
+**cancelled** / **discarded** — no archive move unless user asks; set status only.
+
+Custom status strings allowed in notes; prefer schema in `templates/program-status.schema.json`.
+
+## Voice
+
+**`vibe-scaler/VOICE.md`** — lead reviews with bullets anyone can skim; pseudocode below. Mermaid in the review **file** is fine; in **chat**, always add a text outline (clients that cannot draw mermaid still get the flow).
+

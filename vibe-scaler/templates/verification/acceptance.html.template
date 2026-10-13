@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{TITLE}} — acceptance checklist</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; line-height: 1.45; max-width: 56rem; margin: 2rem auto; padding: 0 1rem; }
+    h1 { font-size: 1.35rem; }
+    .meta { color: #555; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .acceptance-screen { border: 1px solid #ccc; border-radius: 10px; padding: 1rem 1.25rem 1.25rem; margin-bottom: 1.5rem; background: #fafafa; }
+    .acceptance-screen > h2 { margin: 0 0 0.35rem; font-size: 1.15rem; }
+    .screen-intent { margin: 0 0 1rem; color: #444; font-size: 0.95rem; }
+    .screen-mock { border: 2px dashed #999; border-radius: 8px; background: #fff; margin-bottom: 1rem; overflow: hidden; }
+    .screen-mock .mock-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: #888; padding: 0.35rem 0.75rem; background: #f0f0f0; border-bottom: 1px dashed #ccc; }
+    .mock-viewport { padding: 1rem; min-height: 4rem; }
+    .mock-viewport .mock-bar { background: #e8eef5; padding: 0.5rem 0.75rem; font-weight: 600; margin-bottom: 0.75rem; border-radius: 4px; }
+    .mock-viewport .mock-nav { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .mock-viewport .mock-nav span { padding: 0.25rem 0.5rem; background: #eee; border-radius: 4px; font-size: 0.85rem; }
+    .mock-viewport .mock-row { display: flex; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .mock-viewport .mock-field { flex: 1; min-width: 8rem; }
+    .mock-viewport .mock-field label { display: block; font-size: 0.75rem; color: #666; margin-bottom: 0.15rem; }
+    .mock-viewport .mock-input { border: 1px solid #bbb; border-radius: 4px; padding: 0.35rem 0.5rem; background: #fafafa; font-size: 0.85rem; color: #333; }
+    .mock-viewport .mock-btn { display: inline-block; padding: 0.35rem 0.75rem; background: #2563eb; color: #fff; border-radius: 4px; font-size: 0.85rem; }
+    .mock-viewport .mock-btn.secondary { background: #64748b; }
+    .mock-viewport .mock-card { border: 1px solid #ddd; border-radius: 6px; padding: 0.75rem; margin-bottom: 0.5rem; }
+    .mock-viewport .mock-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .mock-viewport .mock-table th, .mock-viewport .mock-table td { border: 1px solid #ddd; padding: 0.35rem 0.5rem; text-align: left; }
+    .mock-viewport .mock-empty { color: #999; font-style: italic; font-size: 0.9rem; }
+    .mock-viewport [data-region] { position: relative; }
+    .mock-viewport [data-region]::after { content: attr(data-region); position: absolute; top: 0; right: 0; font-size: 0.65rem; color: #94a3b8; background: #f8fafc; padding: 0 0.25rem; pointer-events: none; }
+    .verify-list { border-top: 1px solid #ddd; padding-top: 0.75rem; }
+    .verify-list h3 { margin: 0 0 0.5rem; font-size: 0.95rem; color: #333; }
+    .verify-item { margin: 0.75rem 0; padding: 0.5rem 0 0.5rem 0.25rem; border-left: 3px solid #cbd5e1; padding-left: 0.75rem; }
+    label.verify-row { display: flex; gap: 0.5rem; align-items: flex-start; cursor: pointer; font-weight: 500; }
+    label.verify-row input { margin-top: 0.25rem; }
+    .expected { color: #333; margin: 0.35rem 0 0 0; font-size: 0.92rem; }
+    .steps { color: #666; margin: 0.25rem 0 0 0; font-size: 0.88rem; }
+    textarea.notes { width: 100%; min-height: 2.5rem; margin-top: 0.35rem; font: inherit; box-sizing: border-box; }
+    button#export-json { margin-top: 1rem; padding: 0.5rem 1rem; cursor: pointer; }
+    pre#json-out { background: #f4f4f4; padding: 0.75rem; overflow: auto; font-size: 0.8rem; }
+    section.acceptance-general { border: 1px solid #ddd; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem; background: #fff; }
+  </style>
+</head>
+<body>
+  <h1>{{TITLE}} — intern acceptance</h1>
+  <p class="meta">Program: <strong>{{PROGRAM_ID}}</strong> · Dashed boxes are <strong>literal ideator wireframes</strong> (real labels/copy from the plan — refine via <code>/vs-checker-*</code> until approved) · Interns tick boxes after testing the <strong>real</strong> app</p>
+  <p class="meta">Canonical file: <code>verification/acceptance-state.json</code> — paste exported JSON into chat or save that file when done.</p>
+
+  <!--
+  AGENT (ideator-checker): Replace {{SCREEN_SECTIONS}} with one block per screen from the plan.
+
+  For each UI screen:
+  1. <section class="acceptance-screen" data-screen="...">
+  2. <h2>Screen: …</h2>
+  3. <p class="screen-intent">Intent + note if any copy was assumed pending ideator refine.</p>
+  4. <div class="screen-mock"> REALISTIC wireframe: every label/button/header uses LITERAL text from plan/original-prompts (not "Button 1").
+     Show sample rows, filters, empty/error lines exactly as specified. data-region="..." on nodes tied to checklist items.
+  5. <div class="verify-list"> checkboxes: id="cb-<id>", notes id="notes-<id>"
+
+  Non-UI: <section class="acceptance-general"> with verify items only (no screen-mock).
+
+  EXAMPLE (one screen — duplicate pattern per screen in plan):
+  -->
+  {{SCREEN_SECTIONS}}
+
+  <button type="button" id="export-json">Copy acceptance JSON</button>
+  <pre id="json-out" hidden></pre>
+
+  <script id="acceptance-data" type="application/json">{{EMBEDDED_JSON}}</script>
+  <script>
+    (function () {
+      const data = JSON.parse(document.getElementById("acceptance-data").textContent);
+      function collect() {
+        data.items.forEach(function (item) {
+          const cb = document.getElementById("cb-" + item.id);
+          const notes = document.getElementById("notes-" + item.id);
+          if (cb) item.checked = cb.checked;
+          if (notes) item.notes = notes.value || "";
+        });
+        data.updated_at = new Date().toISOString();
+        return data;
+      }
+      document.getElementById("export-json").addEventListener("click", function () {
+        const out = collect();
+        const text = JSON.stringify(out, null, 2);
+        const pre = document.getElementById("json-out");
+        pre.hidden = false;
+        pre.textContent = text;
+        navigator.clipboard && navigator.clipboard.writeText(text);
+      });
+      document.querySelectorAll("input[type=checkbox]").forEach(function (cb) {
+        cb.addEventListener("change", collect);
+      });
+    })();
+  </script>
+</body>
+</html>

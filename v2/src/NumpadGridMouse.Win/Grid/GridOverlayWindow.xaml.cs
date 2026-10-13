@@ -103,14 +103,13 @@ public partial class GridOverlayWindow : Window
             Win + /          Grid on · Win + / again off
             Win + Shift + ?  This help (toggle)
 
-            Grid (Win + Shift + …)
-            1–9              Zoom cell (numpad layout)
-            Enter            Left click · Enter twice = double-click
-            Alt              Right click
-            ↑ ↓              Scroll
-            ;                Drag (hold left) · ; again release
-            '                Drag path · ' again right-click
-            Backspace        Up one level · Esc hide grid
+            1–9              Aim pointer (zoom cell)
+            Win + Enter      Left click · closes grid
+            Win + Enter x2   Double-click · closes grid
+            Win + Alt        Right click · closes grid
+            Backspace        Up one level · Esc close
+
+            Win + Shift + …  scroll ↑↓ · drag ; · path '
             """;
         var text = new FormattedText(
             body,

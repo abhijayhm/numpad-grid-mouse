@@ -1,0 +1,77 @@
+<!-- Copy one block per UI screen when generating acceptance.html from the template. -->
+
+<section class="acceptance-screen" data-screen="login">
+  <h2>Screen: Login</h2>
+  <p class="screen-intent">
+    Literal spec from plan: unauthenticated users land here. Primary action <strong>Continue to workspace</strong>; inline error <em>We couldn’t sign you in. Check email and password.</em> Success → Dashboard.
+  </p>
+
+  <div class="screen-mock" role="img" aria-label="Wireframe preview — not the running app">
+    <div class="mock-label">Wireframe — literal copy from ideator plan (refine until approved)</div>
+    <div class="mock-viewport">
+      <header class="mock-bar" data-region="login-header">Acme Workspace</header>
+      <p class="mock-empty" style="font-style:normal;color:#444;margin:0 0 0.75rem">Sign in to manage your team’s projects.</p>
+      <div class="mock-card" data-region="login-form">
+        <div class="mock-row">
+          <div class="mock-field">
+            <label>Work email</label>
+            <div class="mock-input">priya@acme.example</div>
+          </div>
+        </div>
+        <div class="mock-row">
+          <div class="mock-field">
+            <label>Password</label>
+            <div class="mock-input">••••••••</div>
+          </div>
+        </div>
+        <div class="mock-row">
+          <span class="mock-btn" data-region="login-submit">Continue to workspace</span>
+          <span class="mock-btn secondary">Reset password</span>
+        </div>
+        <p class="mock-empty" data-region="login-error">We couldn’t sign you in. Check email and password.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="verify-list">
+    <h3>Verify against the real app</h3>
+
+    <div class="verify-item" data-region="login-header">
+      <label class="verify-row" for="cb-login-title">
+        <input type="checkbox" id="cb-login-title" />
+        <span>Header shows “Acme Workspace”</span>
+      </label>
+      <p class="expected"><strong>Expected:</strong> Exact title <code>Acme Workspace</code> on load (per wireframe / plan).</p>
+      <p class="steps"><strong>Steps:</strong> Open /login — no login required.</p>
+      <textarea class="notes" id="notes-login-title" placeholder="Notes if something looks wrong"></textarea>
+    </div>
+
+    <div class="verify-item" data-region="login-submit">
+      <label class="verify-row" for="cb-login-success">
+        <input type="checkbox" id="cb-login-success" />
+        <span>Primary button reads “Continue to workspace” and succeeds</span>
+      </label>
+      <p class="expected"><strong>Expected:</strong> Button label matches wireframe; valid login redirects to Dashboard; session set.</p>
+      <p class="steps"><strong>Steps:</strong> Use test credentials from plan → click <strong>Continue to workspace</strong>.</p>
+      <textarea class="notes" id="notes-login-success" placeholder="Notes"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- Non-UI example -->
+<section class="acceptance-general" data-screen="api">
+  <h2>API — health</h2>
+  <p class="screen-intent">No visual screen; verify HTTP contract from ideator plan.</p>
+  <div class="verify-list">
+    <h3>Verify</h3>
+    <div class="verify-item">
+      <label class="verify-row" for="cb-health-200">
+        <input type="checkbox" id="cb-health-200" />
+        <span>GET /health returns 200</span>
+      </label>
+      <p class="expected"><strong>Expected:</strong> JSON <code>{"status":"ok"}</code></p>
+      <p class="steps"><strong>Steps:</strong> curl or browser devtools.</p>
+      <textarea class="notes" id="notes-health-200" placeholder="Notes"></textarea>
+    </div>
+  </div>
+</section>

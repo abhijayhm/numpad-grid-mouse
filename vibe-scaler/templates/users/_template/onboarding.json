@@ -1,0 +1,10 @@
+{
+  "display_name": "",
+  "vibe_scaler_flow_complete": false,
+  "completed_at": null,
+  "source": null,
+  "source_notes": "Set source to user_declared when they say already onboarded; completed_tutorial when they finish menu option 0/help flow.",
+  "terminal_keeper_installed": false,
+  "terminal_keeper_installed_at": null,
+  "terminal_keeper_note": ""
+}

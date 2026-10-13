@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Vibe Scaler program status",
+  "type": "string",
+  "description": "Standard + extensible. Custom values allowed in index.md notes.",
+  "enum": [
+    "ideation",
+    "executing",
+    "iteration",
+    "auto_tests_running",
+    "code_review_pending",
+    "code_review_iteration",
+    "human_checklist_pending",
+    "verification_pending",
+    "goat_verification_pending",
+    "blocked",
+    "closed",
+    "cancelled",
+    "discarded",
+    "archived"
+  ]
+}

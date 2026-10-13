@@ -24,6 +24,8 @@ internal static class WinChord
 
     public static bool IsWinShift() => IsWinDown() && IsShiftDown();
 
+    public static bool IsWinOnly() => IsWinDown() && !IsShiftDown();
+
     public static bool IsAltKey(int vk) =>
         vk == VkMenu || vk == VkLMenu || vk == VkRMenu;
 }

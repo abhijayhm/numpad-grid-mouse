@@ -1,0 +1,27 @@
+﻿> Lightweight always-on pointer — full rule ingest table loads on demand (repo work / subagents)
+
+# Rule router (pointer only)
+
+Custom rule bodies: **`.cursor/custom-rules/*.mdc`**. Cursor injects **this short pointer** — not the full ingest table.
+
+## Load full table when
+
+**Read** `.cursor/custom-rules/rule-router-ingest.mdc` once per task phase when:
+
+- You will explore, edit, run commands, or deploy in the repo
+- You spawn a **subagent** (Task tool)
+- Cold start / unfamiliar scope
+
+Then follow its one-pass ingest table; **Read** only matching `custom-rules` files.
+
+## Skip full table when
+
+Meta-only turns with **no** repo work planned (e.g. “how many rules loaded?”, acks, clarifications). The pointer is enough.
+
+## Subagents
+
+- **Parent:** Read `rule-router-ingest.mdc` → pass matched **filenames** in the Task prompt (not the whole catalog).
+- **Subagent:** Read listed filenames under `.cursor/custom-rules/`; if none listed, Read `rule-router-ingest.mdc` first.
+
+`graphify cursor install` may write `.cursor/rules/graphify.mdc` — **move** to `custom-rules/` (see ingest table). Never leave a second `.mdc` in `.cursor/rules/`.
+

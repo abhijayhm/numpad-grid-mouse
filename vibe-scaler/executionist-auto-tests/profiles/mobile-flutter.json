@@ -1,0 +1,8 @@
+{
+  "id": "mobile-flutter",
+  "label": "Flutter",
+  "frameworks": ["flutter_test", "integration_test"],
+  "detect_globs": ["**/pubspec.yaml"],
+  "adapter": "flutter",
+  "default_run": "flutter test && flutter test integration_test"
+}

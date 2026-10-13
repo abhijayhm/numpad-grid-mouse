@@ -1,0 +1,8 @@
+{
+  "id": "mobile-react-native",
+  "label": "React Native",
+  "frameworks": ["jest", "react-native-testing-library", "detox"],
+  "detect_globs": ["**/app.json", "**/react-native.config.js", "**/.detoxrc.js"],
+  "adapter": "detox",
+  "default_run": "npm test && detox test --configuration ios.sim.debug"
+}

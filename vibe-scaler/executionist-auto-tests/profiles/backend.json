@@ -1,0 +1,8 @@
+{
+  "id": "backend",
+  "label": "Backend / API",
+  "frameworks": ["pytest"],
+  "detect_globs": ["**/pyproject.toml", "**/requirements*.txt", "**/manage.py", "**/pytest.ini"],
+  "adapter": "pytest",
+  "default_run": "pytest -q"
+}

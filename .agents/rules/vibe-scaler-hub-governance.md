@@ -1,0 +1,41 @@
+﻿> Vibe Scaler hub menu, playground context hub, user onboarding and profiles
+
+# Vibe Scaler hub governance
+
+## When
+
+- `/vs-hub`
+- User asks for menu, “where are we”, playground tree, onboarding, or profile MCQs
+
+## Playground context layers
+
+| Path | Role |
+|------|------|
+| `docs/idea-to-reality-playground/CONTEXT.md` | Short hub; points to children |
+| `docs/idea-to-reality-playground/quick-index.md` | **Maintained tree** — programs, chunks, operators, scores |
+| `docs/idea-to-reality-playground/users/<kebab>/` | `onboarding.json`, `profile.json` (MCQs) — **playground-wide** |
+| `PROGRAM_ROOT/context/summary.md` | Per-program rollup → operators, performance |
+| `PROGRAM_ROOT/operators/<kebab>/` | `context.md`, `handoffs.md` — **per person per program** |
+| `PROGRAM_ROOT/performance/scores.json` | Session scores + **average** |
+
+## Identity
+
+Any skill that **writes** playground state must know the human:
+
+- If not in chat context → ask name → ensure `users/<kebab>/` exists.
+- Executionist also maintains `operators/<kebab>/` under the active program.
+
+## Hub skill
+
+**`vibe-scaler`** (`vibe-scaler/skills/vs-hub/SKILL.md`) — **plain numbered menu** (required on Cursor, Claude Code, Codex, Antigravity). Unicode box menus are optional. Tutorial is option 0. Routes ideator (1–2) before executionist (4). Diagrams in chat: text outline always; mermaid only as extra (`VOICE.md`).
+
+## Performance
+
+After chunk Turn C (or via menu 6): **`vs-performance`** or **`vs-performance-NN-<short>`**.
+
+## Maintenance
+
+Ideator, executionist, performance-review, and hub **refresh** `quick-index.md` + program `context/summary.md` when status/chunk/operator changes.
+
+Pair with **`vibe-scaler-rule.mdc`**.
+

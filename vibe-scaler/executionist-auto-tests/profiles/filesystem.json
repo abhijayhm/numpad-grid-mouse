@@ -1,0 +1,8 @@
+{
+  "id": "filesystem",
+  "label": "Filesystem / repo",
+  "frameworks": ["filesystem"],
+  "detect_globs": [],
+  "adapter": "filesystem",
+  "default_run": ""
+}

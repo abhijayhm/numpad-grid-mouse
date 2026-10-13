@@ -7,25 +7,28 @@
 | **Win + /** | Grid on / off |
 | **Win + Shift + ?** | Help overlay (same style as grid) |
 
-## Grid (no Win on navigation)
+## Grid — aim (no Win)
 
 | Keys | Action |
 |------|--------|
-| **1–9** | Zoom (numpad layout 7-8-9 top) |
-| **Backspace** | Up one level |
-| **Esc** | Close grid |
+| **1–9** | Zoom cell + **move pointer** there (numpad layout) |
+| **Backspace** | Up one level (pointer follows) |
+| **Esc** | Close grid (no click) |
 
-## Grid actions (**Win + Shift +** …)
-
-Hold **Win + Shift**, then press the key.
+## Grid — commit (**Win**, not Shift)
 
 | Keys | Action |
 |------|--------|
-| **Enter** | Left click |
-| **Enter** twice (quick, under ~450 ms) | Double-click |
-| **Alt** | Right click |
+| **Win + Enter** | Left click at aim, **grid closes** |
+| **Win + Enter** twice (quick) | Double-click, **grid closes** |
+| **Win + Alt** | Right click at aim, **grid closes** |
+
+## Grid — extras (**Win + Shift +** …)
+
+| Keys | Action |
+|------|--------|
 | **↑** **↓** | Scroll (vertical only) |
 | **;** | Toggle **left drag** (press again to release) |
-| **'** | **Right-drag path**: move with grid, press **'** again to **right-click** at target |
+| **'** | **Right-drag path**: move with grid, **'** again to right-click |
 
-Help text is also on the overlay when you press **Win + Shift + ?**.
+Help: **Win + Shift + ?** on the same overlay.

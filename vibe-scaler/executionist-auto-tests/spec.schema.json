@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "vs-auto-tests spec",
+  "type": "object",
+  "required": ["program_id", "chunk_id", "target"],
+  "properties": {
+    "program_id": { "type": "string" },
+    "chunk_id": { "type": "string" },
+    "target": {
+      "type": "string",
+      "enum": [
+        "backend",
+        "web",
+        "mobile-react-native",
+        "mobile-flutter",
+        "desktop-electron",
+        "filesystem"
+      ]
+    },
+    "profile_override": { "type": "string" },
+    "acceptance_chunk_html": {
+      "type": "string",
+      "description": "Repo-relative path to verification/chunks/<id>.html"
+    },
+    "verify_commands": { "type": "array", "items": { "type": "string" } },
+    "filesystem_assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "expect"],
+        "properties": {
+          "path": { "type": "string" },
+          "expect": { "type": "string", "enum": ["exists", "not_empty", "contains"] },
+          "value": { "type": "string" }
+        }
+      }
+    },
+    "operator": { "type": "string" },
+    "notes": { "type": "string" }
+  }
+}

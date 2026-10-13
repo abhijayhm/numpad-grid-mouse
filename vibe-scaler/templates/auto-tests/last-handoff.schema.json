@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Executionist → auto-tests handoff",
+  "type": "object",
+  "required": [
+    "from_skill",
+    "next_skill",
+    "program_id",
+    "program_root",
+    "chunk_id",
+    "operator",
+    "spec_path",
+    "created_at"
+  ],
+  "properties": {
+    "from_skill": { "const": "executionist" },
+    "next_skill": { "const": "vs-auto-tests" },
+    "program_id": { "type": "string" },
+    "program_root": { "type": "string" },
+    "chunk_id": { "type": "string" },
+    "operator": { "type": "string" },
+    "spec_path": { "type": "string" },
+    "acceptance_html": { "type": "string" },
+    "expected_user_input": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "status": { "enum": ["pending", "running", "passed", "failed", "blocked"] },
+    "created_at": { "type": "string" }
+  }
+}

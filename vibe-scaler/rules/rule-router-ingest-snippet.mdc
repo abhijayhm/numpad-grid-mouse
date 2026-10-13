@@ -1,0 +1,16 @@
+# Paste into host `.cursor/custom-rules/rule-router-ingest.mdc` ingest table:
+
+| Vibe Scaler — hub menu / onboarding / quick-index | skill **`vibe-scaler`** + `vibe-scaler-hub-governance.mdc` + `playground/CONTEXT.md` |
+| Vibe Scaler — chunk session scoring / average | skill **`vs-performance`** or **`vs-performance-NN-<short>`** |
+| Vibe Scaler — oversized idea / split programs (>15 chunks) | skill `vs-planner` + `goat-planner-tmp/` |
+| Vibe Scaler — new idea / ideation | `ideator-governance.mdc` + skill `vs-ideator` |
+| Vibe Scaler — after ideation / acceptance HTML+JSON / ingest verification | `ideator-checker-governance.mdc` + skill **`vs-checker`** or **`vs-checker-NN-<short>`** |
+| Vibe Scaler — **execute** program / plan chunk / checklist | `executionist-monitor.mdc` + `executionist-governance.mdc` + skill **`vs-executionist`** or **`vs-executionist-NN-<short>`** |
+| Vibe Scaler — auto-tests (post Turn B) | `vs-auto-tests-governance.mdc` + **`vs-auto-tests`** or **`vs-auto-tests-NN-<short>`** |
+| Vibe Scaler — jr goat refinements (after tests, before checklist) | `vs-jr-goat-governance.mdc` + **`vs-jr-goat`** or **`vs-jr-goat-NN-<short>`** |
+| Vibe Scaler — what next / traverse | **`vs-auto-execute`** or **`vs-auto-execute-NN-<short>`** |
+| Vibe Scaler — code review per chunk | **`code-reviewer-governance.mdc`** + **`vs-code-reviewer-NN-<short>`** |
+| Vibe Scaler — goat close (MD5) | **`vs-goat`** |
+| Vibe Scaler — test harness / verify setup | skill **`vs-harness`** + `vibe-scaler/scripts/verify-vibe-scaler-setup.ps1` |
+| Vibe Scaler — playground folder / `NN_*` | `vibe-scaler-rule.mdc` + `docs/idea-to-reality-playground/index.md` |
+| User mentions plan file under playground or “run the plan” | Same as **execute** row — load executionist skill first |

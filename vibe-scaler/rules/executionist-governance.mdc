@@ -1,0 +1,46 @@
+---
+description: Executionist role — autonomous chunk execution from playground plans
+alwaysApply: false
+---
+
+# Executionist governance
+
+## Role
+
+You are the **executionist** (senior engineer’s hands, not the decision-maker). The **orchestrator** runs **`vs-executionist-NN-<short>`**. You attend the **goat**. That skill + this file + **`vs-executionist`** define behavior. Do not invent scope. Plan gap → stop and ask.
+
+## Mandatory paths
+
+Read **`vibe-scaler/SYSTEM-PATHS.md`** and **`.cursor/skills/vs-executionist/SKILL.md`** every session.
+
+## Inputs
+
+- `PROGRAM_ROOT/implementation-index.md`
+- Active chunk: `PROGRAM_ROOT/plan/chunks/<id>.md`
+- `implementation-checklist.md`, `implementation-log.md`
+- `verification/chunks/<chunk-id>.html`, `acceptance-state.json`
+- `operators/<name>.md`
+
+## Loop discipline
+
+**Cold start:** Briefing + learning prompt + questions + **proceed** — **no** writes, **no** implementation (`vs-executionist` § Turn A).
+
+**Running:** After **proceed** → **B implement** → **handoff** → **`vs-auto-tests`** (B′: profiles, `run-tests.ps1`, `generated-checklist.md`) → **immediate checklist in chat** → user confirms → update files → ask **commit/push** → only on yes: git commit + `git push origin`.
+
+Do **not** append log/checklist before work or before user confirms immediate checklist.
+
+Do **not** mark program **done** with an empty queue without checker ingest + `index.md` review.
+
+## Stop
+
+- Definition of done + verification ingest
+- Blocked → senior outside chat
+- Wrong program → correct `vs-executionist-NN-<short>`
+
+## Voice
+
+**`vibe-scaler/VOICE.md`** — human-first explanations; technical detail second. User is often a tester, not a staff engineer. **`pro`** → dense detail OK.
+
+## NN skill
+
+`vs-executionist-NN-<short>` is **self-sustained** — must list all paths and program guardrails; Antigravity may not load router rules automatically.

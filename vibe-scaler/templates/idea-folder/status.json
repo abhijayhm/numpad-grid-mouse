@@ -1,0 +1,6 @@
+{
+  "program_id": "{{PROGRAM_ID}}",
+  "status": "ideation",
+  "updated_at": "{{ISO_DATE}}",
+  "notes": "Custom status strings allowed; prefer templates/program-status.schema.json"
+}

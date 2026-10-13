@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VibeScalerPerformanceSession",
+  "type": "object",
+  "required": ["chunk_id", "operator", "scored_at", "dimensions", "overall"],
+  "properties": {
+    "chunk_id": { "type": "string" },
+    "operator": { "type": "string" },
+    "scored_at": { "type": "string", "format": "date-time" },
+    "git_ref": { "type": "string" },
+    "dimensions": {
+      "type": "object",
+      "required": ["plan_adherence", "verification", "handoff_clarity", "communication"],
+      "properties": {
+        "plan_adherence": { "type": "number", "minimum": 1, "maximum": 5 },
+        "verification": { "type": "number", "minimum": 1, "maximum": 5 },
+        "handoff_clarity": { "type": "number", "minimum": 1, "maximum": 5 },
+        "communication": { "type": "number", "minimum": 1, "maximum": 5 }
+      }
+    },
+    "overall": { "type": "number", "minimum": 1, "maximum": 5 },
+    "notes": { "type": "string" }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Vibe Scaler acceptance state",
+  "type": "object",
+  "required": ["program_id", "title", "updated_at", "items"],
+  "properties": {
+    "program_id": { "type": "string", "description": "e.g. 03_my-feature" },
+    "title": { "type": "string" },
+    "updated_at": { "type": "string", "description": "ISO-8601" },
+    "verified_by": { "type": "string", "description": "Intern name when all required checks done" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "expected", "required", "checked"],
+        "properties": {
+          "id": { "type": "string" },
+          "screen": { "type": "string", "description": "UI screen id/title; matches data-screen on acceptance.html section" },
+          "region": { "type": "string", "description": "Optional wireframe anchor; matches data-region in screen-mock HTML" },
+          "label": { "type": "string" },
+          "expected": { "type": "string" },
+          "steps": { "type": "string", "description": "How to verify" },
+          "required": { "type": "boolean" },
+          "checked": { "type": "boolean" },
+          "notes": { "type": "string" },
+          "chunk_ref": { "type": "string", "description": "Links to implementation-index chunk id" }
+        }
+      }
+    }
+  }
+}

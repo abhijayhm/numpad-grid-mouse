@@ -13,4 +13,4 @@ v2\run.bat
 
 ## Keys
 
-**[v2/CHEATSHEET.md](./v2/CHEATSHEET.md)** — Win + / grid · Win + Shift + ? help · Win + Shift + Enter / Alt / ; / ' for clicks, scroll, drag.
+**[v2/CHEATSHEET.md](./v2/CHEATSHEET.md)** — Win + / grid · 1–9 aim · Win + Enter / Alt to click and close · Win + Shift for scroll/drag/help.
