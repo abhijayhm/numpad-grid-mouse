@@ -8,6 +8,8 @@ internal static class NativeMethods
     public const int WhKeyboardLl = 13;
     public const int WmKeydown = 0x0100;
     public const int WmSyskeydown = 0x0104;
+    public const int WmKeyup = 0x0101;
+    public const int WmSyskeyup = 0x0105;
 
     public const uint ModAlt = 0x0001;
     public const uint ModControl = 0x0002;
@@ -24,6 +26,12 @@ internal static class NativeMethods
     public const uint MouseeventfWheel = 0x0800;
     public const uint MouseeventfHwheel = 0x1000;
     public const uint MouseeventfAbsolute = 0x8000;
+    public const uint MouseeventfVirtualdesk = 0x4000;
+
+    public const int SmXvirtualscreen = 76;
+    public const int SmYvirtualscreen = 77;
+    public const int SmCxvirtualscreen = 78;
+    public const int SmCyvirtualscreen = 79;
 
     public const int WheelDelta = 120;
     public const uint MonitorDefaulttonearest = 2;
@@ -71,4 +79,7 @@ internal static class NativeMethods
 
     [DllImport("user32.dll")]
     public static extern short GetAsyncKeyState(int vKey);
+
+    [DllImport("user32.dll")]
+    public static extern int GetSystemMetrics(int nIndex);
 }

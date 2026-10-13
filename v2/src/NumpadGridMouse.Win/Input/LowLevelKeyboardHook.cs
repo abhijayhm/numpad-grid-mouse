@@ -8,7 +8,9 @@ internal sealed class LowLevelKeyboardHook : IDisposable
     private readonly NativeMethods.LowLevelKeyboardProc _proc;
     private nint _hookId;
 
-    public event Func<int, bool, bool>? KeyDown;
+    public KeyboardChordState Chords { get; } = new();
+
+    public event Func<int, bool>? KeyDown;
 
     public LowLevelKeyboardHook()
     {
@@ -38,12 +40,21 @@ internal sealed class LowLevelKeyboardHook : IDisposable
 
     private nint HookCallback(int nCode, nint wParam, nint lParam)
     {
-        if (nCode >= 0 && (wParam == NativeMethods.WmKeydown || wParam == NativeMethods.WmSyskeydown))
+        if (nCode >= 0)
         {
             var vk = Marshal.ReadInt32(lParam);
-            var suppress = KeyDown?.Invoke(vk, true) == true;
-            if (suppress)
-                return 1;
+            var isDown = wParam is NativeMethods.WmKeydown or NativeMethods.WmSyskeydown;
+            var isUp = wParam is NativeMethods.WmKeyup or NativeMethods.WmSyskeyup;
+
+            if (isDown || isUp)
+                Chords.Apply(vk, isDown);
+
+            if (isDown)
+            {
+                var suppress = KeyDown?.Invoke(vk) == true;
+                if (suppress)
+                    return 1;
+            }
         }
 
         return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);

@@ -17,6 +17,7 @@ public partial class GridOverlayWindow : Window
     public GridOverlayWindow()
     {
         InitializeComponent();
+        OverlayZOrder.Wire(this);
     }
 
     public void ShowGrid(ScreenRegion region, GridModel model, AppConfig config, string hudText)
@@ -27,6 +28,7 @@ public partial class GridOverlayWindow : Window
         _config = config;
         _hudText = hudText;
         DipWindowPlacement.Place(this, region);
+        OverlayZOrder.Raise(this);
         InvalidateVisual();
     }
 
@@ -38,6 +40,7 @@ public partial class GridOverlayWindow : Window
         _config = config;
         _hudText = "";
         DipWindowPlacement.Place(this, region);
+        OverlayZOrder.Raise(this);
         InvalidateVisual();
     }
 
@@ -104,10 +107,10 @@ public partial class GridOverlayWindow : Window
             Win + Shift + ?  This help (toggle)
 
             1–9              Aim pointer (zoom cell)
-            Win + Enter      Left click · closes grid
-            Win + Enter x2   Double-click · closes grid
-            Win + Alt        Right click · closes grid
-            Backspace        Up one level · Esc close
+            Win + Enter      Left click at pointer (anytime)
+            Win + Enter x2   Double-click at pointer
+            Win + Alt        Right click at pointer (anytime)
+            Backspace        Up one level · Esc close grid
 
             Win + Shift + …  scroll ↑↓ · drag ; · path '
             """;

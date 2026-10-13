@@ -34,6 +34,7 @@ internal sealed class ApplicationCoordinator : IDisposable
     {
         _configStore = configStore;
         _keyboardHook.KeyDown += OnKeyDown;
+        _keyboardHook.Install();
     }
 
     public AppConfig Config => _config;
@@ -89,7 +90,6 @@ internal sealed class ApplicationCoordinator : IDisposable
         _lastEnterUtc = DateTime.MinValue;
         RefreshOverlay();
         _overlay.Show();
-        EnsureHook();
         MovePointerToCurrentCenter();
     }
 
@@ -101,7 +101,6 @@ internal sealed class ApplicationCoordinator : IDisposable
         _overlay.ShowHelp(_monitorRegion, _config);
         _overlay.Show();
         _helpOnly = true;
-        EnsureHook();
     }
 
     private void CloseAll()
@@ -113,7 +112,6 @@ internal sealed class ApplicationCoordinator : IDisposable
         _gridActive = false;
         _helpOnly = false;
         _helpPanel = false;
-        ReleaseHookIfIdle();
     }
 
     private void EndDrags()
@@ -126,18 +124,9 @@ internal sealed class ApplicationCoordinator : IDisposable
 
         if (_rightDragPath)
         {
-            MovePointerToCurrentCenter();
             _pointer.RightClick();
             _rightDragPath = false;
         }
-    }
-
-    private void EnsureHook() => _keyboardHook.Install();
-
-    private void ReleaseHookIfIdle()
-    {
-        if (!_gridActive && !_helpOnly)
-            _keyboardHook.Uninstall();
     }
 
     private void RefreshOverlay()
@@ -152,7 +141,7 @@ internal sealed class ApplicationCoordinator : IDisposable
         }
 
         var hud = _config.Hud.Enabled
-            ? $"Depth {_gridModel.Depth} · 1–9 aim · Win+Enter click · Win+Alt right · Win+Shift+? help"
+            ? $"Depth {_gridModel.Depth} · release Win · 1–9 aim · Win+Enter / Win+Alt click · Esc close"
             : "";
         _overlay.ShowGrid(_gridModel.CurrentRegion, _gridModel, _config, hud);
     }
@@ -177,8 +166,50 @@ internal sealed class ApplicationCoordinator : IDisposable
         _pointer.MoveTo(x, y);
     }
 
-    private bool OnKeyDown(int vk, bool _)
+    private void PerformPointerClick(bool left)
     {
+        if (left)
+        {
+            var now = DateTime.UtcNow;
+            if ((now - _lastEnterUtc).TotalMilliseconds <= _config.Behavior.DoubleEnterMs)
+                _pointer.DoubleClick();
+            else
+                _pointer.LeftClick();
+            _lastEnterUtc = now;
+        }
+        else
+        {
+            _pointer.RightClick();
+        }
+    }
+
+    private bool TryPointerChordClick(int vk)
+    {
+        if (!_keyboardHook.Chords.WinAloneForPointerChord)
+            return false;
+
+        if (vk == WinChord.VkReturn)
+        {
+            PerformPointerClick(left: true);
+            return true;
+        }
+
+        if (KeyboardChordState.IsAltVk(vk))
+        {
+            PerformPointerClick(left: false);
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool OnKeyDown(int vk)
+    {
+        _keyboardHook.Chords.ReconcileWithAsync();
+
+        if (TryPointerChordClick(vk))
+            return true;
+
         if (_helpOnly)
         {
             if (vk == 0x1B)
@@ -219,17 +250,15 @@ internal sealed class ApplicationCoordinator : IDisposable
             return true;
         }
 
-        if (WinChord.IsWinShift())
+        if (_keyboardHook.Chords.WinWithShift)
         {
             switch (vk)
             {
                 case 0x26:
-                    MovePointerToCurrentCenter();
                     _pointer.Scroll(0, _config.Behavior.ScrollAmount * _config.Behavior.ScrollScale);
                     return true;
 
                 case 0x28:
-                    MovePointerToCurrentCenter();
                     _pointer.Scroll(0, -_config.Behavior.ScrollAmount * _config.Behavior.ScrollScale);
                     return true;
 
@@ -245,24 +274,7 @@ internal sealed class ApplicationCoordinator : IDisposable
             return false;
         }
 
-        if (WinChord.IsWinOnly())
-        {
-            if (vk == WinChord.VkReturn)
-            {
-                CommitPointerClick(left: true);
-                return true;
-            }
-
-            if (WinChord.IsAltKey(vk))
-            {
-                CommitPointerClick(left: false);
-                return true;
-            }
-
-            return false;
-        }
-
-        if (WinChord.IsWinDown())
+        if (_keyboardHook.Chords.WinHeld)
             return false;
 
         if (TryMapNumpad(vk, out var key))
@@ -293,31 +305,10 @@ internal sealed class ApplicationCoordinator : IDisposable
         return false;
     }
 
-    private void CommitPointerClick(bool left)
-    {
-        MovePointerToCurrentCenter();
-        if (left)
-        {
-            var now = DateTime.UtcNow;
-            if ((now - _lastEnterUtc).TotalMilliseconds <= _config.Behavior.DoubleEnterMs)
-                _pointer.DoubleClick();
-            else
-                _pointer.LeftClick();
-            _lastEnterUtc = now;
-        }
-        else
-        {
-            _pointer.RightClick();
-        }
-
-        System.Windows.Application.Current.Dispatcher.Invoke(CloseAll);
-    }
-
     private void ToggleLeftDrag()
     {
         if (!_leftDrag)
         {
-            MovePointerToCurrentCenter();
             _pointer.LeftButtonDown();
             _leftDrag = true;
         }
@@ -331,13 +322,9 @@ internal sealed class ApplicationCoordinator : IDisposable
     private void ToggleRightDragPath()
     {
         if (!_rightDragPath)
-        {
             _rightDragPath = true;
-            MovePointerToCurrentCenter();
-        }
         else
         {
-            MovePointerToCurrentCenter();
             _pointer.RightClick();
             _rightDragPath = false;
         }
