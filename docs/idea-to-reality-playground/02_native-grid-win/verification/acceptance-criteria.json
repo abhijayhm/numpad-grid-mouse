@@ -1,0 +1,17 @@
+{
+  "program_id": "02_native-grid-win",
+  "chunks": [
+    "01-solution-scaffold",
+    "02-global-hotkeys",
+    "03-config-appdata",
+    "04-grid-model",
+    "05-pointer-sendinput",
+    "06-grid-overlay",
+    "07-grid-input-fsm",
+    "08-arrow-pointer-mode",
+    "09-listening-hud",
+    "10-tray-logon-settings",
+    "11-build-publish",
+    "12-parity-acceptance"
+  ]
+}

@@ -1,0 +1,29 @@
+<Window x:Class="NumpadGridMouse.Win.Hud.HelpOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Help"
+        Width="440"
+        SizeToContent="Height"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        Topmost="True"
+        ResizeMode="NoResize"
+        IsHitTestVisible="True">
+  <Border Background="#E8121828" BorderBrush="#3B82F6" BorderThickness="1" CornerRadius="12" Padding="20" Margin="8">
+    <StackPanel>
+      <TextBlock Text="Numpad Grid Mouse" FontSize="18" FontWeight="SemiBold" Foreground="#F8FAFC" Margin="0,0,0,4"/>
+      <TextBlock Text="Press ? or Esc to close" FontSize="12" Foreground="#94A3B8" Margin="0,0,0,14"/>
+      <TextBlock Text="Global" FontWeight="SemiBold" Foreground="#93C5FD" Margin="0,0,0,6"/>
+      <TextBlock Foreground="#E2E8F0" FontFamily="Segoe UI" FontSize="13" TextWrapping="Wrap" LineHeight="22"
+                 Text="Ctrl+Shift+G  —  Grid on / drill center (5)&#x0a;Ctrl+Shift+A  —  Arrow pointer mode&#x0a;Ctrl+Shift+?  —  This help"/>
+      <TextBlock Text="Grid (overlay on)" FontWeight="SemiBold" Foreground="#93C5FD" Margin="0,14,0,6"/>
+      <TextBlock Foreground="#E2E8F0" FontFamily="Consolas" FontSize="12" TextWrapping="Wrap" LineHeight="20"
+                 Text="7 8 9&#x0a;4 5 6  ← numpad layout&#x0a;1 2 3&#x0a;&#x0a;1–9  refine   Enter  click   Shift+Enter  right-click&#x0a;Space  move only   Backspace  up level   Esc  hide grid&#x0a;Arrows  scroll at target"/>
+      <TextBlock Text="Arrow mode (green dot)" FontWeight="SemiBold" Foreground="#93C5FD" Margin="0,14,0,6"/>
+      <TextBlock Foreground="#E2E8F0" FontSize="13" TextWrapping="Wrap" LineHeight="22"
+                 Text="Arrows  move   Enter  click   Enter×2  double-click&#x0a;Shift+F10  right-click   Esc  exit"/>
+    </StackPanel>
+  </Border>
+</Window>

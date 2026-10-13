@@ -1,0 +1,24 @@
+---
+description: Jr goat refinements — suggest product issues after implement, before checklist; sub-chunks circle back
+alwaysApply: false
+---
+
+# Jr goat refinements governance
+
+## When
+
+After executionist Turn B and auto-tests (B′), **before** Turn C.
+
+Skill: **`vs-jr-goat`** or **`vs-jr-goat-NN-<short>`**.
+
+## Verdict
+
+Executionist **always** states recommend / optional / skip and whether `/vs-jr-goat-NN-<short>` is the next step. The agent may push a **recommend**; the human decides.
+
+## Sub-chunks
+
+Accepted issues append to the parent chunk (`## Jr goat sub-chunks` + `plan/chunks/<id>-jr-<n>.md`). They circle back into the same program. Max **three** per pass. Not a new program. Not filler.
+
+## Voice
+
+**`vibe-scaler/VOICE.md`**.

@@ -1,0 +1,14 @@
+---
+description: Cold-start agents read docs/indexing before substantive repo work
+alwaysApply: false
+---
+
+# Project Index Onboarding
+
+If you lack confident project context (new session, new machine, unfamiliar repo):
+
+1. Read `docs/indexing/manifest.md`
+2. Read every `docs/indexing/full-indexing-*.md` listed there, in order
+3. If missing or clearly stale → run the **index-extractor** skill, then re-read
+
+Use the index for orientation; verify implementation details against source before editing.

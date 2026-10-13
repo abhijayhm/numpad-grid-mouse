@@ -1,4 +1,4 @@
-# Python
+﻿# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -38,3 +38,17 @@ Thumbs.db
 
 # Application data
 *.log
+
+# Graphify / .NET build outputs
+graphify-out/
+v2/artifacts/
+v2/**/bin/
+v2/**/obj/
+
+# --- goat-utils ide-init vendor (Windows Vibecoder Utils) ---
+# Track .cursor/ in git — agent rules/skills should be committed.
+
+goat-utils-tmp/
+project-utils/
+# --- end goat-utils ide-init vendor ---
+
